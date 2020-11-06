@@ -4,12 +4,11 @@ import com.dorm.dao.UserDao;
 import com.dorm.entity.RoleUser;
 import com.dorm.entity.User;
 import com.dorm.service.UserService;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.Set;
 
 @Controller
@@ -17,18 +16,14 @@ public class LoginController {
     @Autowired
     UserDao userDao;
 
-    @RequestMapping(value = "/user/login", method = RequestMethod.GET)
-    public String login(String username, String password){
-        System.out.println(username);
-        System.out.println(password);
-
-        User user = userDao.findByUid(1);
-        Set<RoleUser> roleUsers = user.getRoleUsers();
-        System.out.println(roleUsers==null);
-        System.out.println(roleUsers.size());
-
-        for (RoleUser r: roleUsers)
-            System.out.println(r);
-        return "";
+    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
+    @ResponseBody
+    public JSONObject login(@RequestBody User user){
+        System.out.println(user.getName());
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.accumulate("code",20000);
+        jsonObject.accumulate("success", 1);
+        jsonObject.accumulate("token","test");
+        return jsonObject;
     }
 }
