@@ -1,6 +1,7 @@
 package com.dorm.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table
@@ -14,6 +15,14 @@ public class User {
 
     @Column
     String password;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    Set<RoleUser> roleUsers;
+
+    public Set<RoleUser> getRoleUsers() {
+        return roleUsers;
+    }
 
     public int getUid() {
         return uid;
