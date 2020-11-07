@@ -8,10 +8,10 @@ public class RoleAccess {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int raid;
-    @Column
-    int role_id;
-    @Column
-    int access_id;
+    @Column(name = "role_id")
+    int roleId;
+    @Column(name = "access_id")
+    int accessId;
 
     public int getRaid() {
         return raid;
@@ -21,19 +21,19 @@ public class RoleAccess {
         this.raid = raid;
     }
 
-    public int getRole_id() {
-        return role_id;
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setRole_id(int role_id) {
-        this.role_id = role_id;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 
-    public int getAccess_id() {
-        return access_id;
+    public int getAccessId() {
+        return accessId;
     }
 
-    public void setAccess_id(int access_id) {
-        this.access_id = access_id;
+    public void setAccessId(int accessId) {
+        this.accessId = accessId;
     }
 }

@@ -31,7 +31,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public boolean removeAccess(int rid, int aid) {
-        roleAccessDao.deleteByRole_idAndAccess_id(rid,aid);
+        roleAccessDao.deleteByRoleIdAndAccessId(rid,aid);
         return true;
     }
 
@@ -47,10 +47,10 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Set<Access> getAllAccesses(int rid) {
-        Set<RoleAccess> roleAccessSet = roleAccessDao.findAllByRole_id(rid);
+        Set<RoleAccess> roleAccessSet = roleAccessDao.findAllByRoleId(rid);
         Set<Access> accessSet = new HashSet<>();
         for (RoleAccess r: roleAccessSet){
-            accessSet.add(accessDao.findByAid(r.getAccess_id()));
+            accessSet.add(accessDao.findByAid(r.getAccessId()));
         }
         return accessSet;
     }

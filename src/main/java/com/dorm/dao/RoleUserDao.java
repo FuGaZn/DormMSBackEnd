@@ -10,7 +10,7 @@ import java.util.Set;
 @Repository
 public interface RoleUserDao extends JpaRepository<RoleUser, Long> {
 
-    Set<RoleUser> findAllByUser_id(int user_id);
+    Set<RoleUser> findAllByUserId(int user_id);
 
-    void deleteByUser_idAndRole_id(int uid, int rid);
+    void deleteByUserIdAndRoleId(int uid, int rid);
 }

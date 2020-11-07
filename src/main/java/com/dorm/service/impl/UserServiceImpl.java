@@ -39,10 +39,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Set<Role> getAllRoles(int uid) {
-        Set<RoleUser> roleUserSet = roleUserDao.findAllByUser_id(uid);
+        Set<RoleUser> roleUserSet = roleUserDao.findAllByUserId(uid);
         Set<Role> roles = new HashSet<>();
         for (RoleUser roleUser: roleUserSet){
-            Role role = roleDao.findByRid(roleUser.getRole_id());
+            Role role = roleDao.findByRid(roleUser.getRoleId());
             if (role!=null)
                 roles.add(role);
         }
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean removeRole(int uid, int rid) {
-        roleUserDao.deleteByUser_idAndRole_id(uid,rid);
+        roleUserDao.deleteByUserIdAndRoleId(uid,rid);
         return true;
     }
 

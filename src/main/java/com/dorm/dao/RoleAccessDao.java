@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Repository
 public interface RoleAccessDao extends JpaRepository<RoleAccess,Long> {
-    Set<RoleAccess> findAllByRole_id(int role_id);
+    Set<RoleAccess> findAllByRoleId(int role_id);
 
-    void deleteByRole_idAndAccess_id(int rid, int aid);
+    void deleteByRoleIdAndAccessId(int rid, int aid);
 }
