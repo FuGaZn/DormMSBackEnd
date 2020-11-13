@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class Msg {
     int code;
-    String info;
+    String message;
     Map data;
 
     public int getCode() {
@@ -15,12 +15,13 @@ public class Msg {
         this.code = code;
     }
 
-    public String getInfo() {
-        return info;
+
+    public String getMessage() {
+        return message;
     }
 
-    public void setInfo(String info) {
-        this.info = info;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public Map getData() {

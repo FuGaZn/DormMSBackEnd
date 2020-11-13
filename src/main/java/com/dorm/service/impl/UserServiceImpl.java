@@ -31,7 +31,6 @@ public class UserServiceImpl implements UserService {
     RoleService roleService;
     @Override
     public User getUser(String name) {
-        System.out.println("here");
         return userDao.findByName(name);
     }
 
@@ -57,6 +56,11 @@ public class UserServiceImpl implements UserService {
     public boolean removeRole(int uid, int rid) {
         roleUserDao.deleteByUserIdAndRoleId(uid,rid);
         return true;
+    }
+
+    @Override
+    public void updateUser(User user) {
+        userDao.save(user);
     }
 
     @Override

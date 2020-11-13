@@ -12,7 +12,6 @@ public class TokenUtil {
 
         String token = JWT.create().withClaim("uid",user.getUid())
                 .withClaim("name",user.getName())
-                .withClaim("password", user.getPassword())
                 .sign(Algorithm.HMAC256(user.getPassword()));
         return token;
     }

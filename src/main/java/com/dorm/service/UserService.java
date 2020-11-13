@@ -37,6 +37,7 @@ public interface UserService {
 
     int addUser(User user);
 
+    void updateUser(User user);
     /**
      * 获取用户的权限列表
      * @param uid

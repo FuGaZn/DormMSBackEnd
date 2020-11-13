@@ -10,6 +10,7 @@ import com.dorm.service.UserService;
 import com.dorm.service.impl.RoleServiceImpl;
 import com.dorm.service.impl.UserServiceImpl;
 import com.dorm.utils.Msg;
+import com.dorm.utils.MyMD5;
 import com.dorm.utils.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,13 +36,14 @@ public class LoginController {
         if (userService.login(user)){
             Map<String,Object> responseData = new HashMap<>();
             User user1 = userService.getUser(user.getName());
-            responseData.put("token", TokenUtil.getUserToken(user1));
+            String token = TokenUtil.getUserToken(user1);
+            responseData.put("token", token);
             msg.setCode(20000);
-            msg.setInfo("登陆成功");
+            msg.setMessage("登陆成功");
             msg.setData(responseData);
         }else{
-            System.out.println("login error");
             msg.setCode(50000);
+            msg.setMessage("登陆失败");
         }
         return msg;
     }
@@ -50,7 +52,6 @@ public class LoginController {
     @UserLoginToken
     @GetMapping(value = "/user/info")
     public Msg info(@RequestHeader("X-token") String token) {
-        System.out.println(token);
         int uid = JWT.decode(token).getClaim("uid").asInt();
         User user = userService.getUserById(uid);
         Msg msg = new Msg();
@@ -63,7 +64,7 @@ public class LoginController {
         responseData.put("name",user.getName());
         responseData.put("avatar","https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
         msg.setCode(20000);
-        msg.setInfo("登陆成功");
+        msg.setMessage("登陆成功");
         msg.setData(responseData);
         return msg;
     }
@@ -87,5 +88,24 @@ public class LoginController {
             User user2 = userService.register(user);
         }
         return null;
+    }
+
+    @PostMapping("/user/modify/pwd")
+    @ResponseBody
+    @UserLoginToken
+    public Msg modifyPassword(@RequestParam String oldPassword,@RequestParam String newPassword, @RequestHeader("X-token") String token){
+        Msg msg = new Msg();
+        int uid = JWT.decode(token).getClaim("uid").asInt();
+        User user = userService.getUserById(uid);
+        if (user.getPassword().equals(MyMD5.encrypt(oldPassword+user.getSalt()))){
+            user.setPassword(MyMD5.encrypt(newPassword+user.getSalt()));
+            userService.updateUser(user);
+            msg.setMessage("修改成功");
+            msg.setCode(20000);
+        }else{
+            msg.setMessage("原密码错误");
+            msg.setCode(50016);
+        }
+        return msg;
     }
 }
