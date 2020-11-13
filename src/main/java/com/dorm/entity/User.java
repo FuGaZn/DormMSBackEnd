@@ -16,12 +16,31 @@ public class User {
     @Column
     String password;
 
+    @Column
+    String salt;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     Set<RoleUser> roleUsers;
 
+    public User() {
+    }
+
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
+
     public Set<RoleUser> getRoleUsers() {
         return roleUsers;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public int getUid() {
@@ -46,5 +65,17 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid=" + uid +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", roleUsers=" + roleUsers +
+                '}';
     }
 }

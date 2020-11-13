@@ -9,14 +9,17 @@ import com.dorm.entity.RoleUser;
 import com.dorm.entity.User;
 import com.dorm.service.RoleService;
 import com.dorm.service.UserService;
+import com.dorm.utils.MyMD5;
+import com.dorm.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Repository
+@Service
 public class UserServiceImpl implements UserService {
     @Autowired
     UserDao userDao;
@@ -28,6 +31,7 @@ public class UserServiceImpl implements UserService {
     RoleService roleService;
     @Override
     public User getUser(String name) {
+        System.out.println("here");
         return userDao.findByName(name);
     }
 
@@ -69,5 +73,30 @@ public class UserServiceImpl implements UserService {
             accessSet.addAll(accessSet1);
         }
         return accessSet;
+    }
+
+    @Override
+    public User register(User user) {
+        user.setSalt(StringUtil.getRandomString(user.getPassword().length()));
+        user.setPassword(MyMD5.encrypt(user.getPassword()+user.getSalt()));
+        user.setUid(userDao.save(user).getUid());
+        return user;
+    }
+
+    @Override
+    public boolean login(User user) {
+        User user1 = getUser(user.getName());
+        if(user1 == null)
+            return false;
+        String secretedPwd = MyMD5.encrypt(user.getPassword()+user1.getSalt());
+        if (secretedPwd.equals(user1.getPassword())){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public User getUserById(int id) {
+        return userDao.findByUid(id);
     }
 }

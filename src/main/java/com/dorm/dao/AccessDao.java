@@ -9,5 +9,4 @@ import org.springframework.stereotype.Repository;
 public interface AccessDao extends JpaRepository<Access, Long> {
 
     Access findByAid(int aid);
-
 }

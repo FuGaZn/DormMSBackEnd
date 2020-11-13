@@ -1,22 +1,19 @@
 import com.dorm.dao.UserDao;
 import com.dorm.entity.RoleUser;
 import com.dorm.entity.User;
+import com.dorm.service.UserService;
+import com.dorm.service.impl.UserServiceImpl;
+import com.dorm.utils.MyMD5;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
-
 public class Test {
     @Autowired
-    UserDao userDao;
+    UserServiceImpl userService;
 
     @org.junit.Test
     public void test(){
-        User user = userDao.findByUid(7);
-        Set<RoleUser> roleUsers = user.getRoleUsers();
-        System.out.println(roleUsers==null);
-        System.out.println(roleUsers.size());
-
-        for (RoleUser r: roleUsers)
-            System.out.println(r);
+        userService.register(new User("admin","111111"));
     }
 }

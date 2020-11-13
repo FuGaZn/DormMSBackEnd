@@ -5,12 +5,14 @@ import com.dorm.entity.Access;
 import com.dorm.entity.Role;
 import com.dorm.entity.RoleUser;
 import com.dorm.entity.User;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 public interface UserService {
      User getUser(String name);
 
+     User getUserById(int id);
     /**
      * 为用户赋予某个角色
      * @param roleUser
@@ -41,4 +43,8 @@ public interface UserService {
      * @return
      */
     Set<Access> getAllAccesses(int uid);
+
+    User register(User user);
+
+    boolean login(User user);
 }
