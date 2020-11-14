@@ -30,8 +30,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     RoleService roleService;
     @Override
-    public User getUser(String name) {
-        return userDao.findByName(name);
+    public User getUser(String workerID) {
+        return userDao.findByName(workerID);
     }
 
     @Override

@@ -19,6 +19,22 @@ public class User {
     @Column
     String salt;
 
+    //工号
+    @Column
+    String workerID;
+
+    public String getWorkerID() {
+        return workerID;
+    }
+
+    public void setWorkerID(String workerID) {
+        this.workerID = workerID;
+    }
+
+    public void setRoleUsers(Set<RoleUser> roleUsers) {
+        this.roleUsers = roleUsers;
+    }
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     Set<RoleUser> roleUsers;
