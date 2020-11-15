@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,6 +42,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Set<RoleUser> getAllRoleUsers(int uid) {
+        return roleUserDao.findAllByUserId(uid);
+    }
+
+    @Override
     public Set<Role> getAllRoles(int uid) {
         Set<RoleUser> roleUserSet = roleUserDao.findAllByUserId(uid);
         Set<Role> roles = new HashSet<>();
@@ -60,7 +66,29 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
+        for (RoleUser roleUser: user.getRoleUsers()) {
+            roleUserDao.save(roleUser);
+        }
         userDao.save(user);
+    }
+
+    @Override
+    @Transactional
+    public boolean updateRoles(int uid, Set<RoleUser> newRoleUsers) {
+        User user = getUserById(uid);
+        Set<RoleUser> originRoles = user.getRoleUsers();
+        for (RoleUser ru: originRoles){
+            if (!newRoleUsers.contains(ru)){
+                ru.setStatus(1);
+                roleUserDao.save(ru);
+            }
+        }
+        for (RoleUser roleUser: newRoleUsers) {
+            roleUserDao.save(roleUser);
+            user.getRoleUsers().add(roleUser);
+        }
+        userDao.save(user);
+        return true;
     }
 
     @Override
@@ -102,5 +130,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(int id) {
         return userDao.findByUid(id);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userDao.findAll();
     }
 }

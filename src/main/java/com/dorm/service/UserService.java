@@ -7,6 +7,7 @@ import com.dorm.entity.RoleUser;
 import com.dorm.entity.User;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 public interface UserService {
@@ -48,4 +49,10 @@ public interface UserService {
     User register(User user);
 
     boolean login(User user);
+
+    List<User> getAllUsers();
+
+    boolean updateRoles(int uid, Set<RoleUser> roleUsers);
+
+    Set<RoleUser> getAllRoleUsers(int uid);
 }

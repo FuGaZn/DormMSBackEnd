@@ -24,6 +24,8 @@ public interface RoleService {
 
     Role getRole(int rid);
 
+    Role getRoleByName(String name);
+
     int addRole(Role role);
 
     /**

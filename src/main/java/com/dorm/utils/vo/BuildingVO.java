@@ -1,6 +1,6 @@
-package com.dorm.utils;
+package com.dorm.utils.vo;
 
-public class Building {
+public class BuildingVO {
     int bid;
     int floors;
     int dormTotal;

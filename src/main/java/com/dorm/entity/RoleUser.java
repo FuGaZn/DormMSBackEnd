@@ -1,6 +1,7 @@
 package com.dorm.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "role_user")
@@ -14,6 +15,17 @@ public class RoleUser {
 
     @Column(name = "role_id")
     int roleId;
+
+    @Column
+    int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public int getRuid() {
         return ruid;
@@ -46,5 +58,20 @@ public class RoleUser {
                 ", userId=" + userId +
                 ", roleId=" + roleId +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RoleUser roleUser = (RoleUser) o;
+        return userId == roleUser.userId &&
+                roleId == roleUser.roleId &&
+                status == roleUser.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, roleId, status);
     }
 }
