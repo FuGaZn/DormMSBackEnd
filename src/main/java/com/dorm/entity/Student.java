@@ -1,5 +1,7 @@
 package com.dorm.entity;
 
+import com.dorm.utils.vo.StudentVO;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,8 +16,6 @@ public class Student {
     @Column
     String name;
 
-    @Column(name = "dorm_id")
-    int dorm;
 
     @Column
     String dormName;
@@ -23,6 +23,16 @@ public class Student {
     @Column
     int gender;
 
+    public Student() {
+
+    }
+
+    public Student(StudentVO student,Dorm dorm) {
+        this.studentID = student.getStudentID();
+        this.name = student.getName();
+        this.gender = student.getGender();
+        this.dormName = student.getDormName();
+    }
     public String getDormName() {
         return dormName;
     }
@@ -63,11 +73,14 @@ public class Student {
         this.name = name;
     }
 
-    public int getDorm() {
-        return dorm;
-    }
-
-    public void setDorm(int dorm) {
-        this.dorm = dorm;
+    @Override
+    public String toString() {
+        return "Student{" +
+                "sid=" + sid +
+                ", studentID='" + studentID + '\'' +
+                ", name='" + name + '\'' +
+                ", dormName='" + dormName + '\'' +
+                ", gender=" + gender +
+                '}';
     }
 }

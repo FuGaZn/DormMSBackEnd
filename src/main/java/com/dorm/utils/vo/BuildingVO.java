@@ -5,7 +5,7 @@ import com.dorm.entity.Dorm;
 
 import java.util.List;
 
-public class BuildingVO{
+public class BuildingVO {
     String buildingID;
     int floors;
     int dormTotal;
@@ -13,20 +13,26 @@ public class BuildingVO{
     int dormEmpty;
     int bedEmpty;
 
+    public BuildingVO() {
+    }
+
     public BuildingVO(Building building, List<Dorm> allDorms) {
         this.buildingID = building.getBuildingID();
         this.floors = building.getFloors();
-        this.dormTotal = allDorms.size();
-        int dormEmpty = 0, bedTotal=0, bedEmpty = 0;
-        for (Dorm dorm: allDorms){
-            if (dorm.getEmptyBed() > 0)
-                dormEmpty++;
-            bedTotal+=dorm.getTotalBed();
-            bedEmpty+=dorm.getEmptyBed();
+        int dormEmpty = 0, bedTotal = 0, bedEmpty = 0;
+        if (allDorms != null) {
+            this.dormTotal = allDorms.size();
+            for (Dorm dorm : allDorms) {
+                if (dorm.getEmptyBed() > 0)
+                    dormEmpty++;
+                bedTotal += dorm.getTotalBed();
+                bedEmpty += dorm.getEmptyBed();
+            }
+            this.dormEmpty = dormEmpty;
+            this.bedEmpty = bedEmpty;
+            this.bedTotal = bedTotal;
         }
-        this.dormEmpty = dormEmpty;
-        this.bedEmpty = bedEmpty;
-        this.bedTotal = bedTotal;
+
     }
 
     public String getBuildingID() {

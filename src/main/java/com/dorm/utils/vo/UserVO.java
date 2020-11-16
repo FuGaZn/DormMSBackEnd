@@ -10,6 +10,7 @@ public class UserVO {
     List<String> roles;
     String lastLoginTime;
 
+
     public int getUid() {
         return uid;
     }

@@ -30,4 +30,23 @@ public class DormServiceImpl implements DormService {
     public List<Dorm> findAllDormsByBuilding(String building) {
         return dormDao.findAllByBuilding(building);
     }
+
+    @Override
+    public Building findBuildingByBuildingID(String buildingID) {
+        return buildingDao.findByBuildingID(buildingID);
+    }
+
+    @Override
+    public void addOrUpdateDorm(Dorm dorm) {
+        dormDao.save(dorm);
+    }
+    @Override
+    public Dorm findByDormName(String dormName) {
+        return dormDao.findByDormName(dormName);
+    }
+
+    @Override
+    public Dorm findByDid(int id) {
+        return dormDao.findByDid(id);
+    }
 }

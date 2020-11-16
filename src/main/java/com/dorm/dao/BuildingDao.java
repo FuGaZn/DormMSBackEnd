@@ -10,4 +10,6 @@ import java.util.List;
 public interface BuildingDao extends JpaRepository<Building, Long> {
     @Override
     List<Building> findAll();
+
+    Building findByBuildingID(String buildingID);
 }

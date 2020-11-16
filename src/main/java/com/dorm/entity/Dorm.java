@@ -1,5 +1,7 @@
 package com.dorm.entity;
 
+import com.dorm.utils.vo.DormVO;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -10,7 +12,7 @@ public class Dorm {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int did;
 
-    @Column
+    @Column(unique = true)
     String dormName;
 
     //所属楼 13
@@ -27,9 +29,16 @@ public class Dorm {
     @Column
     int emptyBed;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "dorm_id")
-    Set<Student> students;
+    public Dorm() {
+    }
+
+    public Dorm(DormVO dormVO) {
+        this.dormName = dormVO.getDormName();
+        this.building = dormVO.getBuilding();
+        this.floor = dormVO.getFloor();
+        this.totalBed = dormVO.getTotalBed();
+        this.emptyBed = dormVO.getEmptyBed();
+    }
 
     public String getBuilding() {
         return building;

@@ -13,4 +13,12 @@ public interface DormService {
     public List<Building> findAllBuildings();
 
     public List<Dorm> findAllDormsByBuilding(String building);
+
+    public Building findBuildingByBuildingID(String buildingID);
+
+    public void addOrUpdateDorm(Dorm dorm);
+
+    Dorm findByDid(int id);
+
+    Dorm findByDormName(String name);
 }
