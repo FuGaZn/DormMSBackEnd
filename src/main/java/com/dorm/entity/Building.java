@@ -39,4 +39,13 @@ public class Building {
     public void setBuildingID(String buildingID) {
         this.buildingID = buildingID;
     }
+
+    @Override
+    public String toString() {
+        return "Building{" +
+                "bid=" + bid +
+                ", buildingID='" + buildingID + '\'' +
+                ", floors=" + floors +
+                '}';
+    }
 }

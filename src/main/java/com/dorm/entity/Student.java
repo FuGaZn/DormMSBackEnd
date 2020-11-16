@@ -18,7 +18,18 @@ public class Student {
     int dorm;
 
     @Column
+    String dormName;
+
+    @Column
     int gender;
+
+    public String getDormName() {
+        return dormName;
+    }
+
+    public void setDormName(String dormName) {
+        this.dormName = dormName;
+    }
 
     public int getGender() {
         return gender;

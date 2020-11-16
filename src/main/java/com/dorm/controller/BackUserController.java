@@ -1,6 +1,7 @@
 package com.dorm.controller;
 
 import com.dorm.annotation.UserLoginToken;
+import com.dorm.entity.Role;
 import com.dorm.entity.RoleUser;
 import com.dorm.entity.User;
 import com.dorm.service.impl.RoleServiceImpl;
@@ -51,8 +52,32 @@ public class BackUserController {
             }
         }
         System.out.println(newRoleUsers.size());
-       // user.setRoleUsers(newRoleUsers);
         userService.updateRoles(user.getUid(), newRoleUsers);
+        msg.setCode(20000);
+        return msg;
+    }
+
+    @ResponseBody
+    @PostMapping("/add")
+    public Msg addUser(@RequestBody UserVO userVO){
+        Msg msg = new Msg();
+
+        User user = new User();
+        user.setName(userVO.getName());
+        user.setWorkerID(userVO.getWorkerID());
+        user.setPassword("111111");
+        Set<RoleUser> roleUsers = new HashSet<>();
+        user = userService.register(user);
+        for (String role_string: userVO.getRoles()){
+            Role role = roleService.getRoleByName(role_string);
+            RoleUser roleUser = new RoleUser();
+            roleUser.setUserId(user.getUid());
+            roleUser.setRoleId(role.getRid());
+            roleUsers.add(roleUser);
+        }
+        user.setRoleUsers(roleUsers);
+        userService.updateUser(user);
+   //     System.out.println(userVO.toString());
         msg.setCode(20000);
         return msg;
     }
@@ -73,7 +98,6 @@ public class BackUserController {
             userVO.setWorkerID(u.getWorkerID());
             userVO.setLastLoginTime("2020/11/15 20:56:49");
             Set<RoleUser> roleUsers = userService.getAllRoleUsers(u.getUid());
-            System.out.println(roleUsers.size());
             List<String> roles = new ArrayList<>();
             for (RoleUser ru: roleUsers){
                 if (ru.getStatus() == 0)

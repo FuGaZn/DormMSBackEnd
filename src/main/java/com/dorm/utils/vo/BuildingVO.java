@@ -1,19 +1,40 @@
 package com.dorm.utils.vo;
 
-public class BuildingVO {
-    int bid;
+import com.dorm.entity.Building;
+import com.dorm.entity.Dorm;
+
+import java.util.List;
+
+public class BuildingVO{
+    String buildingID;
     int floors;
     int dormTotal;
     int bedTotal;
     int dormEmpty;
     int bedEmpty;
 
-    public int getBid() {
-        return bid;
+    public BuildingVO(Building building, List<Dorm> allDorms) {
+        this.buildingID = building.getBuildingID();
+        this.floors = building.getFloors();
+        this.dormTotal = allDorms.size();
+        int dormEmpty = 0, bedTotal=0, bedEmpty = 0;
+        for (Dorm dorm: allDorms){
+            if (dorm.getEmptyBed() > 0)
+                dormEmpty++;
+            bedTotal+=dorm.getTotalBed();
+            bedEmpty+=dorm.getEmptyBed();
+        }
+        this.dormEmpty = dormEmpty;
+        this.bedEmpty = bedEmpty;
+        this.bedTotal = bedTotal;
     }
 
-    public void setBid(int bid) {
-        this.bid = bid;
+    public String getBuildingID() {
+        return buildingID;
+    }
+
+    public void setBuildingID(String buildingID) {
+        this.buildingID = buildingID;
     }
 
     public int getFloors() {
