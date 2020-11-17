@@ -58,7 +58,8 @@ public class LoginController {
         HashMap<String, Object> responseData = new HashMap<>();
         Set<String> roles = new HashSet<>();
         for (RoleUser roleUser: user.getRoleUsers()){
-            roles.add(roleService.getRole(roleUser.getRoleId()).getName());
+            if (roleUser.getStatus() == 0)
+                roles.add(roleService.getRole(roleUser.getRoleId()).getName());
         }
         responseData.put("roles",roles);
         responseData.put("name",user.getName());
