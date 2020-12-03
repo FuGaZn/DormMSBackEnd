@@ -47,6 +47,19 @@ public class DormController {
     }
 
     @ResponseBody
+    @GetMapping("/building/simpleList")
+    public Msg listSimpleBuildings(){
+        Msg msg = new Msg();
+        msg.setCode(20000);
+        List<Building> buildings = dormService.findAllBuildings();
+        Map<String, Object> map = new HashMap<>();
+        map.put("buildings", buildings);
+        msg.setData(map);
+        return msg;
+    }
+
+
+    @ResponseBody
     @GetMapping("/building/list")
     public Msg listBuildings(){
         Msg msg = new Msg();

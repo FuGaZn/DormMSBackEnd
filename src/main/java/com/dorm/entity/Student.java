@@ -23,6 +23,9 @@ public class Student {
     @Column
     int gender;
 
+    @Column
+    String verifyCode;
+
     public Student() {
 
     }
@@ -32,6 +35,7 @@ public class Student {
         this.name = student.getName();
         this.gender = student.getGender();
         this.dormName = student.getDormName();
+        this.verifyCode = student.getVerifyCode();
     }
     public String getDormName() {
         return dormName;
@@ -71,6 +75,15 @@ public class Student {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    public String getVerifyCode() {
+        return verifyCode;
+    }
+
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
     }
 
     @Override

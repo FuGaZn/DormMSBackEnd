@@ -17,6 +17,9 @@ public class DormVO {
 
     int emptyBed;
 
+    int gender;
+
+
     public DormVO() {
     }
 
@@ -26,6 +29,14 @@ public class DormVO {
         this.floor = dorm.getFloor();
         this.totalBed = dorm.getTotalBed();
         this.emptyBed = dorm.getEmptyBed();
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
     public String getDormName() {

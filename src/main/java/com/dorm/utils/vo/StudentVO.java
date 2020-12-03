@@ -13,6 +13,7 @@ public class StudentVO {
     int floor;
     int gender;
     String genderShow = "女";
+    String verifyCode;
 
     //必须要有一个无参构造器，否则controller无法自动把json转化为这个对象
     public StudentVO() {
@@ -20,6 +21,7 @@ public class StudentVO {
 
     public StudentVO(Student student, Dorm dorm) {
         this.studentID = student.getStudentID();
+        this.verifyCode = student.getVerifyCode();
         this.name = student.getName();
         this.gender = student.getGender();
         if (this.gender == 1)
@@ -29,7 +31,14 @@ public class StudentVO {
             this.building = dorm.getBuilding();
             this.floor = dorm.getFloor();
         }
+    }
 
+    public String getVerifyCode() {
+        return verifyCode;
+    }
+
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
     }
 
     public String getBuilding() {

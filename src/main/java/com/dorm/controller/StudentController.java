@@ -7,7 +7,10 @@ import com.dorm.service.StudentService;
 import com.dorm.service.impl.DormServiceImpl;
 import com.dorm.service.impl.StudentServiceImpl;
 import com.dorm.utils.Msg;
+import com.dorm.utils.mq.MqProducer;
+import com.dorm.utils.vo.SelectForm;
 import com.dorm.utils.vo.StudentVO;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +27,33 @@ public class StudentController {
     DormServiceImpl dormService;
     @Autowired
     StudentServiceImpl studentService;
+    @Autowired
+    MqProducer producer;
+
+    @ResponseBody
+    @GetMapping("/get")
+    public Msg getStudent(String studentID){
+        Msg msg = new Msg();
+        msg.setCode(20000);
+        Student student = studentService.findByStudentID(studentID);
+        StudentVO studentVO = null;
+        if (student!=null) {
+            studentVO = new StudentVO(student, null);
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("student", studentVO);
+        msg.setData(map);
+        return msg;
+    }
+
+    @ResponseBody
+    @GetMapping("/random")
+    public Msg randomCreateStudent(){
+        Msg msg = new Msg();
+        msg.setCode(20000);
+        studentService.randomCreateStudent();
+        return msg;
+    }
 
     @ResponseBody
     @PostMapping("/add")
@@ -58,6 +88,20 @@ public class StudentController {
         Map<String, Object> map = new HashMap<>();
         map.put("students",studentVOS);
         msg.setData(map);
+        return msg;
+    }
+
+    @ResponseBody
+    @PostMapping("/submit")
+    public Msg handleSelectForm(@RequestBody SelectForm selectForm){
+        Msg msg = new Msg();
+        msg.setCode(20000);
+        try {
+        //    System.out.println(selectForm);
+            producer.sendMessage(selectForm);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return msg;
     }
 }

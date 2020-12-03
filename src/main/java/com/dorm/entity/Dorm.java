@@ -29,6 +29,9 @@ public class Dorm {
     @Column
     int emptyBed;
 
+    @Column
+    int gender;
+
     public Dorm() {
     }
 
@@ -38,6 +41,15 @@ public class Dorm {
         this.floor = dormVO.getFloor();
         this.totalBed = dormVO.getTotalBed();
         this.emptyBed = dormVO.getEmptyBed();
+        this.gender = dormVO.getGender();
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
     public String getBuilding() {
