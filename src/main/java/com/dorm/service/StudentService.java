@@ -16,6 +16,6 @@ public interface StudentService {
 
     void randomCreateStudent();
 
-    void handleSelectForm(String buildingID, int gender, List<String> studentIDs);
+    void handleSelectForm(String buildingID, int gender,String firstStudent, List<String> studentIDs);
 
 }

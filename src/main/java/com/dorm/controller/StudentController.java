@@ -2,23 +2,17 @@ package com.dorm.controller;
 
 import com.dorm.entity.Dorm;
 import com.dorm.entity.Student;
-import com.dorm.service.DormService;
-import com.dorm.service.StudentService;
 import com.dorm.service.impl.DormServiceImpl;
 import com.dorm.service.impl.StudentServiceImpl;
 import com.dorm.utils.Msg;
 import com.dorm.utils.mq.MqProducer;
 import com.dorm.utils.vo.SelectForm;
 import com.dorm.utils.vo.StudentVO;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/user/student")
@@ -51,7 +45,22 @@ public class StudentController {
     public Msg randomCreateStudent(){
         Msg msg = new Msg();
         msg.setCode(20000);
-        studentService.randomCreateStudent();
+       // studentService.randomCreateStudent();
+//        for (int i = 0; i < 25; i++) {
+//            Dorm dorm = new Dorm();
+//            dorm.setBuilding("5");
+//            String name = "5";
+//            int floor = (new Random().nextInt(5) + 1);
+//            name += "" + floor;
+//            name += "" + (new Random().nextInt(5));
+//            name += "" + new Random().nextInt(10);
+//            dorm.setDormName(name);
+//            dorm.setEmptyBed(new Random().nextInt(4)+2);
+//            dorm.setGender(new Random().nextInt(2));
+//            dorm.setFloor(floor);
+//            dorm.setTotalBed(dorm.getEmptyBed());
+//            dormService.addOrUpdateDorm(dorm);
+//        }
         return msg;
     }
 
@@ -97,7 +106,6 @@ public class StudentController {
         Msg msg = new Msg();
         msg.setCode(20000);
         try {
-        //    System.out.println(selectForm);
             producer.sendMessage(selectForm);
         }catch (Exception e){
             e.printStackTrace();
@@ -105,3 +113,4 @@ public class StudentController {
         return msg;
     }
 }
+

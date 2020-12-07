@@ -14,4 +14,8 @@ public interface DormDao extends JpaRepository<Dorm, Long> {
 
     Dorm findByDid(int did);
     Dorm findByDormName(String dormName);
+
+    List<Dorm> findAllByGenderAndEmptyBed(int gender, int empty);
+
+    List<Dorm> findAllByGenderAndEmptyBedGreaterThan(int gender, int empty);
 }

@@ -13,7 +13,6 @@ public class MqProducer {
     private RabbitTemplate rabbitTemplate;
 
     public void sendMessage(SelectForm form) throws JsonProcessingException {
-        System.out.println("send "+form);
         Gson gson = new Gson();
         rabbitTemplate.convertAndSend("topic.e", "r",gson.toJson(form));
     }
