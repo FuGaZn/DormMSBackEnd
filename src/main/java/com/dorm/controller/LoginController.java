@@ -4,10 +4,13 @@ import com.auth0.jwt.JWT;
 import com.dorm.annotation.PassToken;
 import com.dorm.annotation.UserLoginToken;
 import com.dorm.entity.RoleUser;
+import com.dorm.entity.Student;
 import com.dorm.entity.User;
 import com.dorm.service.RoleService;
+import com.dorm.service.StudentService;
 import com.dorm.service.UserService;
 import com.dorm.service.impl.RoleServiceImpl;
+import com.dorm.service.impl.StudentServiceImpl;
 import com.dorm.service.impl.UserServiceImpl;
 import com.dorm.utils.Msg;
 import com.dorm.utils.MyMD5;
@@ -27,6 +30,8 @@ public class LoginController {
     UserServiceImpl userService;
     @Autowired
     RoleServiceImpl roleService;
+    @Autowired
+    StudentServiceImpl studentService;
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     @ResponseBody
@@ -44,6 +49,26 @@ public class LoginController {
         }else{
             msg.setCode(50000);
             msg.setMessage("登陆失败");
+        }
+        return msg;
+    }
+
+    @RequestMapping(value = "/stu/login", method = RequestMethod.POST)
+    @ResponseBody
+    @PassToken
+    public Msg stuLogin(String id, String code){
+        Msg msg = new Msg();
+        Student student = studentService.findByStudentID(id);
+        if (student == null || !student.getVerifyCode().equals(code.trim())){
+            msg.setCode(50000);
+            msg.setMessage("登陆失败");
+        }else{
+            msg.setCode(20000);
+            msg.setMessage("登陆成功");
+            Map<String, Object> data = new HashMap<>();
+            data.put("dorm", student.getDormName());
+            data.put("token", TokenUtil.getStudentToken(student));
+            msg.setData(data);
         }
         return msg;
     }

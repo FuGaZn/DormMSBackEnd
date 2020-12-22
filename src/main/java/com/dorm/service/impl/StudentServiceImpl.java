@@ -63,11 +63,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void handleSelectForm(String buildingID, int gender, String firstStudent, List<String> studentIDs) {
-        System.out.println("here");
         SubmitBackMsg msg = submitBackMsgDao.findByStudentID(firstStudent);
         if (msg == null) {
             msg = new SubmitBackMsg();
             msg.setCode(20000);
+            msg.setStudentID(firstStudent);
             msg.setId(submitBackMsgDao.save(msg).getId());
         }
         String message = "";

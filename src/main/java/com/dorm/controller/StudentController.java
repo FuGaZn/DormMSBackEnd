@@ -1,7 +1,10 @@
 package com.dorm.controller;
 
+import com.dorm.annotation.UserLoginToken;
+import com.dorm.dao.SubmitBackMsgDao;
 import com.dorm.entity.Dorm;
 import com.dorm.entity.Student;
+import com.dorm.entity.SubmitBackMsg;
 import com.dorm.service.impl.DormServiceImpl;
 import com.dorm.service.impl.StudentServiceImpl;
 import com.dorm.utils.Msg;
@@ -15,17 +18,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @Controller
-@RequestMapping("/user/student")
+@RequestMapping()
 public class StudentController {
     @Autowired
     DormServiceImpl dormService;
     @Autowired
     StudentServiceImpl studentService;
     @Autowired
+    SubmitBackMsgDao submitBackMsgDao;
+    @Autowired
     MqProducer producer;
 
     @ResponseBody
-    @GetMapping("/get")
+    @GetMapping("/user/student/get")
     public Msg getStudent(String studentID){
         Msg msg = new Msg();
         msg.setCode(20000);
@@ -41,7 +46,7 @@ public class StudentController {
     }
 
     @ResponseBody
-    @GetMapping("/random")
+    @GetMapping("/user/student/random")
     public Msg randomCreateStudent(){
         Msg msg = new Msg();
         msg.setCode(20000);
@@ -65,7 +70,7 @@ public class StudentController {
     }
 
     @ResponseBody
-    @PostMapping("/add")
+    @PostMapping("/user/student/add")
     public Msg addStudent(@RequestBody StudentVO studentVO){
         Msg msg = new Msg();
         msg.setCode(20000);
@@ -79,7 +84,7 @@ public class StudentController {
     }
 
     @ResponseBody
-    @GetMapping("/list")
+    @GetMapping("/user/student/list")
     public Msg listStudents(){
         Msg msg = new Msg();
         msg.setCode(20000);
@@ -101,7 +106,7 @@ public class StudentController {
     }
 
     @ResponseBody
-    @PostMapping("/submit")
+    @PostMapping("/user/student/submit")
     public Msg handleSelectForm(@RequestBody SelectForm selectForm){
         Msg msg = new Msg();
         msg.setCode(20000);
@@ -110,6 +115,20 @@ public class StudentController {
         }catch (Exception e){
             e.printStackTrace();
         }
+        return msg;
+    }
+
+    @ResponseBody
+    @UserLoginToken
+    @GetMapping("/stu/back")
+    public Msg getBackInfo(String studentID){
+        Msg msg = new Msg();
+        msg.setCode(20000);
+        SubmitBackMsg backMsg = submitBackMsgDao.findByStudentID(studentID);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("msg",backMsg);
+        msg.setData(map);
         return msg;
     }
 }
